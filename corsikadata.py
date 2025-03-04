@@ -147,13 +147,13 @@ class CorsikaData:
         #test_loader = torch.utils.data.DataLoader(self.data[permut][train_portion_index:-1], batch_size=batch_size, shuffle=False, num_workers=2)
         #test_labels_loader = torch.utils.data.DataLoader(self.labels[permut][train_portion_index:-1], batch_size=batch_size, shuffle=False, num_workers=2)
 
-        train_indices = permut[:train_portion_index]
-        test_indices = permut[train_portion_index:]
+        self.train_indices = permut[:train_portion_index]
+        self.test_indices = permut[train_portion_index:]
 
-        train_dataset = CustomDataset(self.data, self.labels, train_indices)
-        test_dataset = CustomDataset(self.data, self.labels, test_indices)
+        train_dataset = CustomDataset(self.data, self.labels, self.train_indices)
+        test_dataset = CustomDataset(self.data, self.labels, self.test_indices)
 
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)  
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=False, num_workers=2)  
         # With shuffle=True, the DataLoader randomizes the order of data at the beginning of each epoch. 
         # This means that even though the training set is initially in a random order, 
         # each epoch will see a different mini-batch composition.
